@@ -16,5 +16,5 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Run only EVSEIdTest
-      run: mvn -B -Dtest=com.example.evms.domain.EVSEIdTest test --file pom.xml 
+    - name: Run all tests
+      run: mvn -B test --file pom.xml 
