@@ -22,7 +22,7 @@ public class EVSEIdTest {
     @DisplayName("Invalid EVSE ID format - Country code error")
     void invalidCountryCode() {
         // Country code is not 2 uppercase letters
-        assertTrue(EVSEId.isValid("C*ABC*EVSE123456")); // Only 1 letter
+        assertFalse(EVSEId.isValid("C*ABC*EVSE123456")); // Only 1 letter
         assertFalse(EVSEId.isValid("CN1*ABC*EVSE123456")); // Contains number
     }
 
