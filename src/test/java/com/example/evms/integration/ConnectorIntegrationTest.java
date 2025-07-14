@@ -15,9 +15,11 @@ import org.springframework.http.*;
 import com.example.evms.infrastructure.LocationRepository;
 import com.example.evms.infrastructure.EVSERepository;
 import com.example.evms.infrastructure.ConnectorRepository;
+import org.junit.jupiter.api.Tag;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Tag("integration")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ConnectorIntegrationTest {
 

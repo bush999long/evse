@@ -12,7 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.example.evms.infrastructure.LocationRepository;
 import com.example.evms.infrastructure.EVSERepository;
 import com.example.evms.infrastructure.ConnectorRepository;
+import org.junit.jupiter.api.Tag;
 
+@Tag("integration")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class LocationIntegrationTest {
 
