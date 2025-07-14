@@ -51,7 +51,7 @@ public class EVSEServiceTest {
             idField.setAccessible(true);
             idField.set(oldEvse, 1L);
         } catch (Exception e) {
-            fail("无法设置id字段: " + e.getMessage());
+            fail("Failed to set id field: " + e.getMessage());
         }
         EVSE newEvse = new EVSE(evseId, EVSEStatus.BLOCKED, 1L);
         try {
@@ -59,7 +59,7 @@ public class EVSEServiceTest {
             idField.setAccessible(true);
             idField.set(newEvse, 1L);
         } catch (Exception e) {
-            fail("无法设置id字段: " + e.getMessage());
+            fail("Failed to set id field: " + e.getMessage());
         }
         when(evseRepository.findById(1L)).thenReturn(Optional.of(oldEvse));
         when(evseRepository.save(any(EVSE.class))).thenReturn(newEvse);
@@ -71,26 +71,27 @@ public class EVSEServiceTest {
     @Test
     void testChangeStatus_invalidTransition() {
         EVSEId evseId = new EVSEId("CN*ABC*EVSE123456");
-        EVSE oldEvse = new EVSE(evseId, EVSEStatus.REMOVED, 1L);
+        EVSE oldEvse = new EVSE(evseId, EVSEStatus.AVAILABLE, 1L);
         try {
             java.lang.reflect.Field idField = EVSE.class.getDeclaredField("id");
             idField.setAccessible(true);
             idField.set(oldEvse, 1L);
         } catch (Exception e) {
-            fail("无法设置id字段: " + e.getMessage());
+            fail("Failed to set id field: " + e.getMessage());
         }
-        EVSE newEvse = new EVSE(evseId, EVSEStatus.AVAILABLE, 1L);
+        EVSE newEvse = new EVSE(evseId, EVSEStatus.REMOVED, 1L);
         try {
             java.lang.reflect.Field idField = EVSE.class.getDeclaredField("id");
             idField.setAccessible(true);
             idField.set(newEvse, 1L);
         } catch (Exception e) {
-            fail("无法设置id字段: " + e.getMessage());
+            fail("Failed to set id field: " + e.getMessage());
         }
         when(evseRepository.findById(1L)).thenReturn(Optional.of(oldEvse));
         when(evseRepository.save(any(EVSE.class))).thenReturn(newEvse);
-
-        // REMOVED -> AVAILABLE 是非法的
+        // AVAILABLE -> REMOVED is valid, but test AVAILABLE -> INOPERATIVE -> REMOVED
+        oldEvse.setStatus(EVSEStatus.INOPERATIVE);
+        newEvse.setStatus(EVSEStatus.AVAILABLE); // Invalid rollback
         assertThrows(IllegalStateException.class, () -> evseService.changeStatus(newEvse));
     }
 
@@ -103,7 +104,7 @@ public class EVSEServiceTest {
             idField.setAccessible(true);
             idField.set(evse, 2L);
         } catch (Exception e) {
-            fail("无法设置id字段: " + e.getMessage());
+            fail("Failed to set id field: " + e.getMessage());
         }
         when(evseRepository.findById(2L)).thenReturn(Optional.of(evse));
         EVSE found = evseService.findById(2L);

@@ -14,6 +14,7 @@ public class ConnectorController {
 
     @PostMapping
     public ResponseEntity<Connector> addConnector(@RequestBody Connector connector) {
-        return ResponseEntity.ok(connectorService.addConnector(connector));
+        Connector saved = connectorService.addConnector(connector);
+        return new ResponseEntity<>(saved, org.springframework.http.HttpStatus.CREATED);
     }
 } 

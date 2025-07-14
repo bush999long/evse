@@ -37,14 +37,14 @@ public class LocationServiceTest {
     @Test
     void testUpdateLocation() {
         Location location = new Location();
-        // id 只能通过反射设置，因为没有setId方法
+        // id can only be set by reflection because there is no setId method
         java.lang.reflect.Field idField;
         try {
             idField = Location.class.getDeclaredField("id");
             idField.setAccessible(true);
             idField.set(location, 1L);
         } catch (Exception e) {
-            fail("无法设置id字段: " + e.getMessage());
+            fail("Failed to set id field: " + e.getMessage());
         }
         location.setName("Old Name");
         when(locationRepository.findById(1L)).thenReturn(Optional.of(location));
@@ -63,7 +63,7 @@ public class LocationServiceTest {
             idField.setAccessible(true);
             idField.set(location, 2L);
         } catch (Exception e) {
-            fail("无法设置id字段: " + e.getMessage());
+            fail("Failed to set id field: " + e.getMessage());
         }
         when(locationRepository.findById(2L)).thenReturn(Optional.of(location));
         Optional<Location> found = locationService.findById(2L);

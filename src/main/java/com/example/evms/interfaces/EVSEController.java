@@ -14,12 +14,12 @@ public class EVSEController {
 
     @PostMapping
     public ResponseEntity<EVSE> addEVSE(@RequestBody EVSE evse) {
-        return ResponseEntity.ok(evseService.addEVSE(evse));
+        EVSE saved = evseService.addEVSE(evse);
+        return new ResponseEntity<>(saved, org.springframework.http.HttpStatus.CREATED);
     }
 
-    @PatchMapping()
+    @PutMapping()
     public ResponseEntity<EVSE> changeStatus(@RequestBody EVSE evse) {
-        System.err.println("wwwwwwwwwwwwwww");
         return ResponseEntity.ok(evseService.changeStatus(evse));
     }
 } 

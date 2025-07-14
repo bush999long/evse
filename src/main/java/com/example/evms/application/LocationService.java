@@ -29,7 +29,7 @@ public class LocationService {
 
     @Transactional
     public Location updateLocation(Location updated) {
-        Location location = locationRepository.findById(updated.getId()).orElseThrow(() -> new RuntimeException("Location不存在"));
+        Location location = locationRepository.findById(updated.getId()).orElseThrow(() -> new RuntimeException("Location doesnot exist"));
         location.setName(updated.getName());
         location.setAddress(updated.getAddress());
         location.setCoordinates(updated.getCoordinates());
