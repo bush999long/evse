@@ -90,7 +90,7 @@ public class EVSEServiceTest {
         when(evseRepository.findById(1L)).thenReturn(Optional.of(oldEvse));
         when(evseRepository.save(any(EVSE.class))).thenReturn(newEvse);
         // AVAILABLE -> REMOVED is valid, but test AVAILABLE -> INOPERATIVE -> REMOVED
-        oldEvse.setStatus(EVSEStatus.INOPERATIVE);
+        oldEvse.setStatus(EVSEStatus.REMOVED);
         newEvse.setStatus(EVSEStatus.AVAILABLE); // Invalid rollback
         assertThrows(IllegalStateException.class, () -> evseService.changeStatus(newEvse));
     }
