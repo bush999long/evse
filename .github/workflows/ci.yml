@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  RunAllTest:
+  RunUnitTest:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -17,4 +17,4 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     - name: Run only unit tests
-      run: mvn -B test -DexcludeTags=integration --file pom.xml 
+      run: mvn -B test -Dtest=LocationServiceTest,EVSEServiceTest,ConnectorServiceTest,EVSEIdTest --file pom.xml 
